@@ -163,7 +163,7 @@ const HintModal = ({ isOpen, onClose, imageUrl, hintText }) => {
         className="bg-slate-800 p-2 rounded-xl shadow-2xl relative max-w-lg w-full m-4 animate-scale-in"
         onClick={e => e.stopPropagation()}
       >
-        <div className="bg-slate-900/50 rounded-lg aspect-video w-full flex items-center justify-center overflow-hidden">
+        <div className={`bg-slate-900/50 rounded-lg ${imageUrl ? 'aspect-[9/16] max-h-[80vh]' : 'aspect-video'} w-full flex items-center justify-center overflow-hidden`}>
           {renderContent()}
         </div>
         <button 
@@ -281,10 +281,10 @@ const GameScreen = ({ puzzle, onSuccess, currentStage, totalStages, onCustomFail
 
       <button 
         onClick={() => setIsHintVisible(true)}
-        className="absolute bottom-5 right-5 w-14 h-14 bg-yellow-400 rounded-full flex items-center justify-center text-gray-900 hover:bg-yellow-300 transition-transform duration-300 hover:scale-110 shadow-lg shadow-yellow-500/30"
+        className="absolute top-5 right-5 bg-yellow-400/80 text-gray-900 font-bold py-2 px-4 rounded-lg hover:bg-yellow-400 transition-all duration-300 text-sm shadow-md"
         aria-label="Show Hint"
         >
-        <LightbulbIcon className="w-7 h-7" />
+        HINT
       </button>
 
       <HintModal 
