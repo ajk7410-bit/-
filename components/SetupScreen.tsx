@@ -1,6 +1,6 @@
 
 import React, { useState, useCallback } from 'react';
-import ImageUploader from './ImageUploader';
+import ImageUploader from './ImageUploader.tsx';
 
 interface SetupScreenProps {
   onImagesReady: (images: string[]) => void;

@@ -1,10 +1,11 @@
+
 import React, { useState, useCallback } from 'react';
-import { PUZZLES } from './constants';
-import type { GamePhase } from './types';
-import GameScreen from './components/GameScreen';
-import CompletionScreen from './components/CompletionScreen';
-import MissionScreen from './components/MissionScreen';
-import WelcomeScreen from './components/WelcomeScreen';
+import { PUZZLES } from './constants.ts';
+import type { GamePhase } from './types.ts';
+import GameScreen from './components/GameScreen.tsx';
+import CompletionScreen from './components/CompletionScreen.tsx';
+import MissionScreen from './components/MissionScreen.tsx';
+import WelcomeScreen from './components/WelcomeScreen.tsx';
 
 const App: React.FC = () => {
   const [gamePhase, setGamePhase] = useState<GamePhase>('WELCOME');

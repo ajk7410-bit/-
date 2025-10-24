@@ -1,6 +1,6 @@
 
 import React, { useState, useRef } from 'react';
-import { UploadIcon, ImageIcon } from './Icons';
+import { UploadIcon, ImageIcon } from './Icons.tsx';
 
 interface ImageUploaderProps {
   index: number;

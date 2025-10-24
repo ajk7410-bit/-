@@ -1,7 +1,8 @@
+
 import React, { useState, useRef, useEffect } from 'react';
-import type { Puzzle } from '../types';
-import HintModal from './HintModal';
-import { LockIcon, LightbulbIcon } from './Icons';
+import type { Puzzle } from '../types.ts';
+import HintModal from './HintModal.tsx';
+import { LockIcon, LightbulbIcon } from './Icons.tsx';
 
 interface GameScreenProps {
   puzzle: Puzzle;
