@@ -41,23 +41,26 @@
       animation: shake 0.5s ease-in-out;
     }
   </style>
+  <!-- Use robust UMD builds for React and ReactDOM -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <!-- Add Babel Standalone for in-browser TSX transformation -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script type="importmap">
 {
   "imports": {
     "react": "https://aistudiocdn.com/react@^19.2.0",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
     "react/": "https://aistudiocdn.com/react@^19.2.0/"
   }
 }
 </script>
-<!-- Add Babel Standalone for in-browser TSX transformation -->
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 <body class="bg-gray-900 text-white">
   <div id="root"></div>
-  <script type="text/babel" data-type="module">
-import React, { useState, useCallback, useRef, useEffect } from 'react';
-import ReactDOM from 'react-dom/client';
+  <script type="text/babel">
+// React and ReactDOM are now available globally from the scripts above.
+// We can destructure the hooks we need from the global React object.
+const { useState, useCallback, useRef, useEffect } = React;
 
 // --- From types.ts ---
 interface Puzzle {
@@ -104,19 +107,19 @@ const PUZZLES: Puzzle[] = [
 ];
 
 // --- From components/Icons.tsx ---
-const LockIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+const LockIcon = (props) => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 0 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
   </svg>
 );
 
-const LightbulbIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+const LightbulbIcon = (props) => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-4.5c0-2.126-1.016-4.126-2.884-5.414A5.986 5.986 0 0 0 6 5.25a6.01 6.01 0 0 0 1.5 4.5m3 5.25a6.01 6.01 0 0 1-4.5 1.5a6.01 6.01 0 0 1-4.5-1.5m9 0a6.01 6.01 0 0 0-1.5-4.5c0-2.126 1.016-4.126 2.884-5.414A5.986 5.986 0 0 1 18 5.25a6.01 6.01 0 0 0-1.5 4.5m-9 0a6.01 6.01 0 0 0 4.5 1.5m0 0a6.01 6.01 0 0 0 4.5-1.5" />
   </svg>
 );
 
-const CardKeyIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+const CardKeyIcon = (props) => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15A2.25 2.25 0 0 0 2.25 6.75v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
   </svg>
@@ -124,14 +127,7 @@ const CardKeyIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
 
 
 // --- From components/HintModal.tsx ---
-interface HintModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  imageUrl?: string;
-  hintText?: string;
-}
-
-const HintModal: React.FC<HintModalProps> = ({ isOpen, onClose, imageUrl, hintText }) => {
+const HintModal = ({ isOpen, onClose, imageUrl, hintText }) => {
   if (!isOpen) return null;
 
   const renderContent = () => {
@@ -184,22 +180,14 @@ const HintModal: React.FC<HintModalProps> = ({ isOpen, onClose, imageUrl, hintTe
 
 
 // --- From components/GameScreen.tsx ---
-interface GameScreenProps {
-  puzzle: Puzzle;
-  onSuccess: () => void;
-  currentStage: number;
-  totalStages: number;
-  onCustomFail?: () => void;
-}
-
-const GameScreen: React.FC<GameScreenProps> = ({ puzzle, onSuccess, currentStage, totalStages, onCustomFail }) => {
+const GameScreen = ({ puzzle, onSuccess, currentStage, totalStages, onCustomFail }) => {
   const codeLength = puzzle.answer.length;
   const inputType = puzzle.type || 'numeric';
   
-  const [code, setCode] = useState<string[]>(Array(codeLength).fill(''));
-  const [error, setError] = useState<boolean>(false);
-  const [isHintVisible, setIsHintVisible] = useState<boolean>(false);
-  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const [code, setCode] = useState(Array(codeLength).fill(''));
+  const [error, setError] = useState(false);
+  const [isHintVisible, setIsHintVisible] = useState(false);
+  const inputRefs = useRef([]);
 
   useEffect(() => {
     inputRefs.current = inputRefs.current.slice(0, codeLength);
@@ -207,7 +195,7 @@ const GameScreen: React.FC<GameScreenProps> = ({ puzzle, onSuccess, currentStage
     inputRefs.current[0]?.focus();
   }, [puzzle, codeLength]);
 
-  const handleChange = (index: number, value: string) => {
+  const handleChange = (index, value) => {
     const validationRegex = inputType === 'numeric' ? /^\d*$/ : /^[a-zA-Z]*$/;
     if (!validationRegex.test(value)) return;
 
@@ -220,13 +208,13 @@ const GameScreen: React.FC<GameScreenProps> = ({ puzzle, onSuccess, currentStage
     }
   };
 
-  const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (index, e) => {
     if (e.key === 'Backspace' && !code[index] && index > 0) {
       inputRefs.current[index - 1]?.focus();
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const enteredCode = code.join('');
 
@@ -311,11 +299,7 @@ const GameScreen: React.FC<GameScreenProps> = ({ puzzle, onSuccess, currentStage
 
 
 // --- From components/CompletionScreen.tsx ---
-interface CompletionScreenProps {
-  onPlayAgain: () => void;
-}
-
-const CompletionScreen: React.FC<CompletionScreenProps> = ({ onPlayAgain }) => {
+const CompletionScreen = ({ onPlayAgain }) => {
   return (
     <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-10 text-center shadow-2xl border border-slate-700 animate-fade-in-scale">
       <div className="text-yellow-300 mb-6 flex justify-center">
@@ -335,15 +319,7 @@ const CompletionScreen: React.FC<CompletionScreenProps> = ({ onPlayAgain }) => {
 };
 
 // --- From components/MissionScreen.tsx ---
-interface MissionScreenProps {
-  icon: string;
-  title: string;
-  message: string;
-  buttonText: string;
-  onComplete: () => void;
-}
-
-const MissionScreen: React.FC<MissionScreenProps> = ({ icon, title, message, buttonText, onComplete }) => {
+const MissionScreen = ({ icon, title, message, buttonText, onComplete }) => {
   return (
     <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-10 text-center shadow-2xl border border-slate-700 animate-fade-in-scale">
       <div className="text-yellow-300 text-6xl mb-4">{icon}</div>
@@ -362,11 +338,7 @@ const MissionScreen: React.FC<MissionScreenProps> = ({ icon, title, message, but
 };
 
 // --- From components/WelcomeScreen.tsx ---
-interface WelcomeScreenProps {
-  onStart: () => void;
-}
-
-const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStart }) => {
+const WelcomeScreen = ({ onStart }) => {
   return (
     <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-10 text-center shadow-2xl border border-slate-700 animate-fade-in-scale">
       <div className="text-pink-300 text-6xl mb-4">💖</div>
@@ -384,8 +356,8 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStart }) => {
 
 
 // --- From App.tsx ---
-const App: React.FC = () => {
-  const [gamePhase, setGamePhase] = useState<GamePhase>('WELCOME');
+const App = () => {
+  const [gamePhase, setGamePhase] = useState('WELCOME');
   const [currentStage, setCurrentStage] = useState(0);
 
   const handleStartGame = useCallback(() => {
