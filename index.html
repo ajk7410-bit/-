@@ -306,7 +306,7 @@ const CompletionScreen = ({ onPlayAgain }) => {
         <CardKeyIcon className="w-20 h-20" />
       </div>
       <h1 className="text-lg font-sans mb-8 text-gray-100 leading-relaxed whitespace-pre-line">
-        {"고생 많았어.\n그 카드키는 3059 호야.\n즐거운 시간 보내도록 해."}
+        {"고생 많았어.\n그 카드키를 들고 아래의 주소로 가\n\n 서울 용산구 청파로20길 95\n 달콤함이 넘치는 0000 호"}
       </h1>
       <button
         onClick={onPlayAgain}
@@ -447,39 +447,39 @@ const App = () => {
         return <MissionScreen
             icon="💌"
             title="정답이야!"
-            message={"잘 기억하고 있구나!\n 그 답례로 광이가 커피를 사줄거야.\n 지금 ㅇㅇ카페로 가봐!"}
-            buttonText="고마워! "
+            message={"역시 잘 하네\n 이제 본격적으로 시작하기에 앞서\n 지금 광이 팔짱 끼고\n 근처 카페로 가서 자리 잡아봐"}
+            buttonText="알겠어!"
             onComplete={handleMission1Complete}
         />;
       case 'MISSION_1_CONFIRM':
         return <MissionScreen
             icon="☕"
             title="커피 타임"
-            message={"커피 받고나서 아래 버튼 눌러줘"}
-            buttonText="잘 받았어!"
+            message={"자 준비 됐어? 준비 다 됐으면 \n 광이한테 뽀뽀 한번 해주고\n 다음 미션 받아"}
+            buttonText="준비 완료!"
             onComplete={handleMission1Confirm}
         />;
       case 'MISSION_2':
         return <MissionScreen
             icon="🎁"
             title="정답이야!"
-            message={"그림자로 만들어진 어둠은\n 너에게 선물을 줄거야.\n\n 아래 주소지로 가봐 \n\n 서울 용산구 서빙고로 17\n 판매시설동 1001, JUREE"}
+            message={"그림자로 만들어진 어둠은\n 너에게 선물을 줄거야.\n\n 아래 주소지로 가봐 \n\n 용산구 한강대로 95 래미안용산더센트럴\n 지하2층 246호, FLOBLANC"}
             buttonText="지금 당장 갈게!"
             onComplete={handleMission2Complete}
         />;
       case 'MISSION_2_CONFIRM':
         return <MissionScreen
             icon="💖"
-            title="선물 확인"
-            message={"선물 받고 난 후에 아래 버튼 눌러줘"}
-            buttonText="고마워!"
+            title="선물"
+            message={"선물안에 미션이 있어. 잘 살펴봐"}
+            buttonText="미션 찾았어"
             onComplete={handleMission2Confirm}
         />;
       case 'MISSION_3':
         return <MissionScreen
             icon="🔐"
             title="정답이야!"
-            message={"어려웠을텐데 잘 풀어냈네.\n 이제 마지막 문제만 남았어.\n\n용산역 ㅇㅇ번 사물함을 열어봐.\n 비밀번호는 동일해."}
+            message={"어려웠을텐데 잘 풀어냈네.\n 이제 마지막 문제만 남았어.\n\n 용산역 7&8번 승강장 쪽 ㅇ번 사물함을 열어봐.\n\n 연락처는 광이 번호\n 비밀번호는 문제3번 답과 동일해."}
             buttonText="마지막 여정"
             onComplete={handleMission3Complete}
         />;
